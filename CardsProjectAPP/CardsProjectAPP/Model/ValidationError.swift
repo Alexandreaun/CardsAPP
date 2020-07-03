@@ -21,12 +21,3 @@ class ValidationError: NSError{
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-public struct Cards {
-    let type: String
-    let names: [Person]
-}
-
-public struct Person {
-    let name: String
-}

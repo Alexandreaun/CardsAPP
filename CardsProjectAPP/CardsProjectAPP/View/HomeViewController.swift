@@ -10,6 +10,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    let interactor = InfoCardsInteractor(apiManager: ApiManager())
+    
     lazy var labelTitle: UILabel = {
         let v = UILabel(frame: CGRect(x: 0, y: 0, width: 225, height: 55))
         v.textColor = .colorMainTitle
@@ -38,17 +40,31 @@ class HomeViewController: UIViewController {
         return v
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayoutUI()
         instantiateUI()
+        loadInfoListCards()
     }
     
     private func instantiateUI() {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(ListCardsTableViewCell.self, forCellReuseIdentifier: ListCardsTableViewCell.tableviewIdentifier)
+    }
+    
+    private func loadInfoListCards() {
+        
+        interactor.getInfoCards { [weak self] (error) in
+            guard let self = self else {return}
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.tableview.reloadData()
+                }
+            }else{
+                self.showError(buttonLabel: "Ok", titleError: "Atenção", messageError: "Tivemos um problema ao carregar a lista de Cards. Tente mais tarde.")
+            }
+        }
     }
     
     private func setupLayoutUI() {
@@ -85,9 +101,6 @@ class HomeViewController: UIViewController {
             tableview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
             tableview.bottomAnchor.constraint(equalTo: bottomanchor, constant: 0)
         ])
-        
-        
-        
     }
 }
 
@@ -117,7 +130,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController: CustomCellDelegate {
-    func onClickCollectionView(cell: UICollectionViewCell?, type: String, index: Int, click: UITableViewCell) {
+    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, index: Int) {
        let vc = InsideViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.type = type

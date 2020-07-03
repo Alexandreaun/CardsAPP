@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol CustomCellDelegate: class {
-    func onClickCollectionView(cell: UICollectionViewCell?, type: String, index: Int, click: UITableViewCell)
+protocol CustomCellDelegate: class { // click: UITableViewCell
+    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, index: Int)
 }
 
 class ListCardsTableViewCell: UITableViewCell {
@@ -73,8 +73,8 @@ extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? ListCardsCollectionViewCell
-        let value = "teste"
-        delegate?.onClickCollectionView(cell: cell, type: value, index: indexPath.item, click: self)
+        let value = "teste Cards"
+        delegate?.onClickCollectionViewCell(cell: cell, type: value, index: indexPath.item)
         
     }
 }
