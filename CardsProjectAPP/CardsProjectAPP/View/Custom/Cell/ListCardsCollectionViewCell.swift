@@ -32,7 +32,7 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
         let v = UILabel()
         v.textAlignment = .left
         v.textColor = .white
-        v.numberOfLines = 1
+        v.numberOfLines = 0
         v.font = UIFont().fontTitleSmall(size: 18)
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
@@ -66,7 +66,10 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    
-       
+    var contentList: String? {
+        didSet {
+            labelTitle.text = contentList
+        }
+    }
       
 }

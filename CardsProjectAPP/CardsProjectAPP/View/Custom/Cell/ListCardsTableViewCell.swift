@@ -16,7 +16,8 @@ class ListCardsTableViewCell: UITableViewCell {
     
     public static let tableviewIdentifier = "UITableViewCell"
     weak var delegate: CustomCellDelegate?
-       
+    var infoNames: [String]? 
+    
     lazy var collectionview: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -35,7 +36,6 @@ class ListCardsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayoutUI()
-
     }
     
     required init?(coder: NSCoder) {
@@ -55,17 +55,25 @@ class ListCardsTableViewCell: UITableViewCell {
     }}
 
 extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        
+        return infoNames?.count ?? 0
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: ListCardsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCardsCollectionViewCell.collectionIdentifier, for: indexPath) as? ListCardsCollectionViewCell else {return UICollectionViewCell()}
+        guard let infonames = infoNames else {return UICollectionViewCell()}
         
-        cell.labelTitle.text = "teste"
+        if indexPath.row < infonames.count {
+            cell.contentList = infonames[indexPath.row]
+        }
+        
         cell.viewList.backgroundColor = .randomColorCell
         
         return cell
@@ -73,26 +81,17 @@ extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? ListCardsCollectionViewCell
-        let value = "teste Cards"
-        delegate?.onClickCollectionViewCell(cell: cell, type: value, index: indexPath.item)
+        if let infonames = infoNames {
+            if indexPath.row < infonames.count {
+                let value = infonames[indexPath.row]
+                delegate?.onClickCollectionViewCell(cell: cell, type: value, index: indexPath.item)
+                
+            }
+        }
         
     }
 }
 
-extension ListCardsTableViewCell {
-    
-//    func backgroundColorRandom() -> [UIColor] {
-//        let color: UIColor = .randomColorCell
-//        var cores = [UIColor]()
-//
-//        for color in color.cgColor {
-//
-//        }
-//        return .randomColorCell
-//
-//    }
-    
-}
 
 
 

@@ -10,7 +10,9 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    let interactor = InfoCardsInteractor(apiManager: ApiManager())
+    var viewModel = InfoCardsViewModel(apiManager: ApiManager())
+    var infoCards = [UnifyInfoCardModel]()
+    var isApiError: Bool = false
     
     lazy var labelTitle: UILabel = {
         let v = UILabel(frame: CGRect(x: 0, y: 0, width: 225, height: 55))
@@ -44,27 +46,37 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupLayoutUI()
         instantiateUI()
-        loadInfoListCards()
+        getResponseInfoListCards()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getResponseInfoListCards()
     }
     
     private func instantiateUI() {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(ListCardsTableViewCell.self, forCellReuseIdentifier: ListCardsTableViewCell.tableviewIdentifier)
+
     }
     
-    private func loadInfoListCards() {
+    private func getResponseInfoListCards() {
         
-        interactor.getInfoCards { [weak self] (error) in
+        viewModel.getInfoCards { [weak self] (error) in
             guard let self = self else {return}
             if error == nil {
                 DispatchQueue.main.async {
                     self.tableview.reloadData()
                 }
             }else{
-                self.showError(buttonLabel: "Ok", titleError: "Atenção", messageError: "Tivemos um problema ao carregar a lista de Cards. Tente mais tarde.")
+                //TODO: - Tratar em caso de erro de request
             }
         }
+    }
+    
+    private func handlerErrorRequestInfo() {
+        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar a moeda escolhida. Tente novamente mais tarde!")
     }
     
     private func setupLayoutUI() {
@@ -107,11 +119,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return viewModel.listCards.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Teste"
+        return viewModel.titleForSections[section]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,6 +132,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: ListCardsTableViewCell = tableView.dequeueReusableCell(withIdentifier: ListCardsTableViewCell.tableviewIdentifier, for: indexPath) as? ListCardsTableViewCell else {return UITableViewCell()}
+        cell.infoNames = viewModel.listCards[indexPath.section].cardsModel
         cell.delegate = self
         return cell
     }
@@ -136,12 +149,6 @@ extension HomeViewController: CustomCellDelegate {
         vc.type = type
         present(vc, animated: true, completion: nil)
     }
-    
-   
-    
-   
-    
-
-    
-    
 }
+
+

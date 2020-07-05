@@ -6,11 +6,12 @@
 //  Copyright © 2020 Alexandre Carlos Aun. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class InfoCardsInteractor {
+class InfoCardsViewModel {
     
     let apiManager: CardsRequestDelegate
+    var listCards = [UnifyInfoCardModel]()
     
     init(apiManager: CardsRequestDelegate) {
         self.apiManager = apiManager
@@ -19,11 +20,9 @@ class InfoCardsInteractor {
     func getInfoCards(completion: @escaping (ValidationError?) -> Void) {
         apiManager.getApiInfoCards { (cards, error) in
             if error == nil {
-                guard let card = cards else {
-                    completion(error)
-                    return
-                }
-                self.loadNewListInfoCards(info: cards)
+                self.listCards = self.loadNewListInfoCards(info: cards)
+                completion(nil)
+                return
             }
             completion(error)
             return
@@ -43,6 +42,26 @@ class InfoCardsInteractor {
                      UnifyInfoCardModel(typeName: "Races", cardsModel: info?.races ?? [])
         ]
         unifyInfo = unity
+
         return unifyInfo
     }
+    
+    var titleForSections: [String] {
+        get {
+            var titleList = [String]()
+            for title in listCards {
+                titleList.append(title.typeName)
+            }
+            return titleList
+        }
+    }
+    
+
+    
+  
+    
+
+    
+    
+    
 }

@@ -11,9 +11,8 @@
 		7A20CFAB24AF663500B8693E /* DetailCardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFAA24AF663500B8693E /* DetailCardsCollectionViewCell.swift */; };
 		7A20CFAF24AF798900B8693E /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFAE24AF798900B8693E /* ApiManager.swift */; };
 		7A20CFB124AF7A4500B8693E /* InfoCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFB024AF7A4500B8693E /* InfoCardModel.swift */; };
-		7A20CFB324AF83E500B8693E /* InfoCardsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFB224AF83E500B8693E /* InfoCardsInteractor.swift */; };
+		7A20CFB324AF83E500B8693E /* InfoCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFB224AF83E500B8693E /* InfoCardsViewModel.swift */; };
 		7A20CFB524AF8BAA00B8693E /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFB424AF8BAA00B8693E /* UIViewController+Extension.swift */; };
-		7A20CFB724AFDCAE00B8693E /* InfoCardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFB624AFDCAE00B8693E /* InfoCardsPresenter.swift */; };
 		7A2324EE24AE5C6A003B84BE /* ListCardsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2324ED24AE5C6A003B84BE /* ListCardsTableViewCell.swift */; };
 		7A2324F024AE6461003B84BE /* ListCardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2324EF24AE6461003B84BE /* ListCardsCollectionViewCell.swift */; };
 		7ADE82B624AE03A300366813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82B524AE03A300366813 /* AppDelegate.swift */; };
@@ -42,9 +41,8 @@
 		7A20CFAA24AF663500B8693E /* DetailCardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardsCollectionViewCell.swift; sourceTree = "<group>"; };
 		7A20CFAE24AF798900B8693E /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		7A20CFB024AF7A4500B8693E /* InfoCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardModel.swift; sourceTree = "<group>"; };
-		7A20CFB224AF83E500B8693E /* InfoCardsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardsInteractor.swift; sourceTree = "<group>"; };
+		7A20CFB224AF83E500B8693E /* InfoCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardsViewModel.swift; sourceTree = "<group>"; };
 		7A20CFB424AF8BAA00B8693E /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		7A20CFB624AFDCAE00B8693E /* InfoCardsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardsPresenter.swift; sourceTree = "<group>"; };
 		7A2324ED24AE5C6A003B84BE /* ListCardsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsTableViewCell.swift; sourceTree = "<group>"; };
 		7A2324EF24AE6461003B84BE /* ListCardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsCollectionViewCell.swift; sourceTree = "<group>"; };
 		7ADE82B224AE03A300366813 /* CardsProjectAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardsProjectAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,28 +78,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7A20CFA924AEA43E00B8693E /* Worker */ = {
+		7A20CFA924AEA43E00B8693E /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				7A20CFAE24AF798900B8693E /* ApiManager.swift */,
 			);
-			path = Worker;
+			path = Repository;
 			sourceTree = "<group>";
 		};
-		7A20CFAC24AF76B700B8693E /* Interactor */ = {
+		7A20CFAC24AF76B700B8693E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				7A20CFB224AF83E500B8693E /* InfoCardsInteractor.swift */,
+				7A20CFB224AF83E500B8693E /* InfoCardsViewModel.swift */,
 			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		7A20CFAD24AF76C300B8693E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				7A20CFB624AFDCAE00B8693E /* InfoCardsPresenter.swift */,
-			);
-			path = Presenter;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		7A2324EB24AE59FC003B84BE /* Custom */ = {
@@ -143,12 +133,11 @@
 		7ADE82B424AE03A300366813 /* CardsProjectAPP */ = {
 			isa = PBXGroup;
 			children = (
-				7A20CFA924AEA43E00B8693E /* Worker */,
-				7A20CFAC24AF76B700B8693E /* Interactor */,
-				7A20CFAD24AF76C300B8693E /* Presenter */,
-				7ADE82DD24AE3B9D00366813 /* Model */,
-				7ADE82DC24AE1AB300366813 /* View */,
 				7ADE82D724AE0CAA00366813 /* Extensions */,
+				7ADE82DD24AE3B9D00366813 /* Model */,
+				7A20CFA924AEA43E00B8693E /* Repository */,
+				7A20CFAC24AF76B700B8693E /* ViewModel */,
+				7ADE82DC24AE1AB300366813 /* View */,
 				7ADE82B524AE03A300366813 /* AppDelegate.swift */,
 				7ADE82B724AE03A300366813 /* SceneDelegate.swift */,
 				7ADE82BE24AE03A800366813 /* Assets.xcassets */,
@@ -305,12 +294,11 @@
 				7A2324F024AE6461003B84BE /* ListCardsCollectionViewCell.swift in Sources */,
 				7A20CFAF24AF798900B8693E /* ApiManager.swift in Sources */,
 				7ADE82D924AE0CC900366813 /* UIColor+Extension.swift in Sources */,
-				7A20CFB324AF83E500B8693E /* InfoCardsInteractor.swift in Sources */,
+				7A20CFB324AF83E500B8693E /* InfoCardsViewModel.swift in Sources */,
 				7A20CFAB24AF663500B8693E /* DetailCardsCollectionViewCell.swift in Sources */,
 				7A20CFB124AF7A4500B8693E /* InfoCardModel.swift in Sources */,
 				7A2324EE24AE5C6A003B84BE /* ListCardsTableViewCell.swift in Sources */,
 				7ADE82DF24AE3BAE00366813 /* ValidationError.swift in Sources */,
-				7A20CFB724AFDCAE00B8693E /* InfoCardsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
