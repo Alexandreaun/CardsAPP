@@ -8,9 +8,12 @@
 
 import UIKit
 
-class InsideViewController: UIViewController {
+class InsideViewController: BaseViewController {
     
+    var name: String?
     var type: String?
+    var cards = [String]()
+    let viewModel = InfoCardsViewModel(infoApiManager: InfoApiManager())
     
     lazy var viewBkButton: UIView = {
         let v = UIView(frame: .zero)
@@ -19,7 +22,7 @@ class InsideViewController: UIViewController {
         v.layer.masksToBounds = true
         v.clipsToBounds = true
         v.contentMode = .scaleAspectFill
-        let tgr = UITapGestureRecognizer(target: self, action: #selector(goToHome))
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(backToHome))
         tgr.numberOfTouchesRequired = 1
         tgr.numberOfTapsRequired = 1
         v.addGestureRecognizer(tgr)
@@ -63,6 +66,50 @@ class InsideViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayoutUI()
+        configureUI()
+        sendDatas()
+        getResponseDetailsCards()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //showLoadingAnimation()
+        getResponseDetailsCards()
+    }
+    
+    private func sendDatas() {
+        viewModel.name = name
+        viewModel.type = type
+        getResponseDetailsCards()
+    }
+    
+    private func getResponseDetailsCards() {
+        viewModel.getDetailCards() { [weak self] (error) in
+            guard let self = self else {return}
+            self.cards = self.viewModel.getImages()
+            DispatchQueue.main.async {
+                if error == nil {
+                    if self.cards.count > 0 {
+                        self.collection.reloadData()
+                        self.hiddenLoadingAnimation()
+                    }else{
+                        self.handlerErrorRequestInfo()
+                        self.hiddenLoadingAnimation()
+                    }
+                    
+                }else {
+                    self.handlerErrorRequestInfo()
+                    self.hiddenLoadingAnimation()
+                }
+            }
+        }
+    }
+    
+    private func handlerErrorRequestInfo() {
+        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar as imagens. Tente novamente mais tarde!")
+    }
+    
+    private func configureUI() {
         labelTitle.text = type ?? ""
     }
     
@@ -110,7 +157,7 @@ class InsideViewController: UIViewController {
         ])
     }
     
-    @objc func goToHome() {
+    @objc func backToHome() {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -123,12 +170,15 @@ extension InsideViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return cards.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCardsCollectionViewCell.collectionDetailIdentifier, for: indexPath) as? DetailCardsCollectionViewCell else {return UICollectionViewCell()}
         
+        if indexPath.item < cards.count {
+            cell.imageCard.loadWebImage(imageView: cell.imageCard, string: cards[indexPath.item])
+        }
         return cell
     }
 }

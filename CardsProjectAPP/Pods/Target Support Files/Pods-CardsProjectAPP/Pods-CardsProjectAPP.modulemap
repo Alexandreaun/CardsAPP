@@ -1,0 +1,6 @@
+framework module Pods_CardsProjectAPP {
+  umbrella header "Pods-CardsProjectAPP-umbrella.h"
+
+  export *
+  module * { export * }
+}

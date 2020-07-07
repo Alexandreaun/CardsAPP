@@ -66,7 +66,10 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    
-       
+    var contentList: String? {
+        didSet {
+            labelTitle.text = contentList
+        }
+    }
       
 }
