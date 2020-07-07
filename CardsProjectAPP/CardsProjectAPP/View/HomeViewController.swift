@@ -8,9 +8,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     
-    var viewModel = InfoCardsViewModel(apiManager: ApiManager())
+    var viewModel = InfoCardsViewModel(infoApiManager: InfoApiManager())
     var infoCards = [UnifyInfoCardModel]()
     var isApiError: Bool = false
     
@@ -47,10 +47,12 @@ class HomeViewController: UIViewController {
         setupLayoutUI()
         instantiateUI()
         getResponseInfoListCards()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        showLoadingAnimation()
         getResponseInfoListCards()
     }
     
@@ -58,25 +60,27 @@ class HomeViewController: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(ListCardsTableViewCell.self, forCellReuseIdentifier: ListCardsTableViewCell.tableviewIdentifier)
-
     }
     
     private func getResponseInfoListCards() {
-        
         viewModel.getInfoCards { [weak self] (error) in
             guard let self = self else {return}
-            if error == nil {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if error == nil {
                     self.tableview.reloadData()
+                    self.hiddenLoadingAnimation()
+                }else{
+                    DispatchQueue.main.async {
+                        self.handlerErrorRequestInfo()
+                        self.hiddenLoadingAnimation()
+                    }
                 }
-            }else{
-                //TODO: - Tratar em caso de erro de request
             }
         }
     }
     
     private func handlerErrorRequestInfo() {
-        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar a moeda escolhida. Tente novamente mais tarde!")
+        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar as informações dos Cards. Tente novamente mais tarde!")
     }
     
     private func setupLayoutUI() {
@@ -95,7 +99,7 @@ class HomeViewController: UIViewController {
             bottomanchor = view.bottomAnchor
             topanchor = view.topAnchor
         }
-                
+        
         NSLayoutConstraint.activate([
             labelTitle.topAnchor.constraint(equalTo: topanchor, constant: 91),
             labelTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 37),
@@ -133,6 +137,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: ListCardsTableViewCell = tableView.dequeueReusableCell(withIdentifier: ListCardsTableViewCell.tableviewIdentifier, for: indexPath) as? ListCardsTableViewCell else {return UITableViewCell()}
         cell.infoNames = viewModel.listCards[indexPath.section].cardsModel
+        cell.typeSelected = viewModel.listCards[indexPath.section]
         cell.delegate = self
         return cell
     }
@@ -142,13 +147,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension HomeViewController: CustomCellDelegate {
-    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, index: Int) {
-       let vc = InsideViewController()
+extension HomeViewController: CustomCellDelegate  {
+    
+    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, name: String) {
+        let vc = InsideViewController()
         vc.modalPresentationStyle = .fullScreen
+        vc.name = name
         vc.type = type
         present(vc, animated: true, completion: nil)
     }
 }
-
-

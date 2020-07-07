@@ -8,15 +8,20 @@
 
 import UIKit
 
-protocol CustomCellDelegate: class { // click: UITableViewCell
-    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, index: Int)
+protocol CustomCellDelegate: class {
+    func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, name: String)
 }
 
 class ListCardsTableViewCell: UITableViewCell {
     
     public static let tableviewIdentifier = "UITableViewCell"
     weak var delegate: CustomCellDelegate?
-    var infoNames: [String]? 
+    var typeSelected: UnifyInfoCardModel?
+    var infoNames: [String]? {
+        didSet {
+            collectionview.reloadData()
+        }
+    }
     
     lazy var collectionview: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -61,34 +66,29 @@ extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return infoNames?.count ?? 0
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: ListCardsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCardsCollectionViewCell.collectionIdentifier, for: indexPath) as? ListCardsCollectionViewCell else {return UICollectionViewCell()}
         guard let infonames = infoNames else {return UICollectionViewCell()}
         
-        if indexPath.row < infonames.count {
-            cell.contentList = infonames[indexPath.row]
+        if indexPath.item < infonames.count {
+            cell.contentList = infonames[indexPath.item]
+            cell.viewList.backgroundColor = .randomColorCell
         }
-        
-        cell.viewList.backgroundColor = .randomColorCell
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? ListCardsCollectionViewCell
         if let infonames = infoNames {
-            if indexPath.row < infonames.count {
-                let value = infonames[indexPath.row]
-                delegate?.onClickCollectionViewCell(cell: cell, type: value, index: indexPath.item)
-                
+            if indexPath.item < infonames.count {
+                let name = infonames[indexPath.item]
+                let type = typeSelected?.typeName ?? ""
+                delegate?.onClickCollectionViewCell(cell: cell, type: type.lowercased(), name: name)
             }
         }
-        
     }
 }
 

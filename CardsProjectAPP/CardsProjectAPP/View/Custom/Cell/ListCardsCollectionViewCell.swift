@@ -32,7 +32,7 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
         let v = UILabel()
         v.textAlignment = .left
         v.textColor = .white
-        v.numberOfLines = 0
+        v.numberOfLines = 1
         v.font = UIFont().fontTitleSmall(size: 18)
         v.translatesAutoresizingMaskIntoConstraints = false
         return v

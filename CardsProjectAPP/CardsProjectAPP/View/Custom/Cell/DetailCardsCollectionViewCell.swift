@@ -14,8 +14,7 @@ class DetailCardsCollectionViewCell: UICollectionViewCell {
 
     lazy var imageCard: UIImageView = {
         let v = UIImageView()
-        v.contentMode = .scaleAspectFit
-        v.backgroundColor = .blue
+        v.contentMode = .scaleAspectFill
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -34,13 +33,10 @@ class DetailCardsCollectionViewCell: UICollectionViewCell {
         addSubview(imageCard)
         
         NSLayoutConstraint.activate([
-            imageCard.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            imageCard.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             imageCard.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
             imageCard.widthAnchor.constraint(equalToConstant: 147),
             imageCard.heightAnchor.constraint(equalToConstant: 223)
         ])
-       
     }
-    
-    
 }
