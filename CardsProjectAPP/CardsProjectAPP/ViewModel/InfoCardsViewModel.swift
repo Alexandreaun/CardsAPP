@@ -34,7 +34,6 @@ class InfoCardsViewModel {
         }
     }
     
-    //TODO: - Tratar excessão em caso de dados nulos
     func loadNewListInfoCards(info: InfoCardModel?) -> [UnifyInfoCardModel] {
         let unity = [UnifyInfoCardModel(typeName: "Classes", cardsModel: info?.classes ?? []),
                      UnifyInfoCardModel(typeName: "Sets", cardsModel: info?.sets ?? []),
@@ -45,6 +44,7 @@ class InfoCardsViewModel {
                      UnifyInfoCardModel(typeName: "Qualities", cardsModel: info?.qualities ?? []),
                      UnifyInfoCardModel(typeName: "Races", cardsModel: info?.races ?? [])
         ]
+        DataManager.shared.saveDataInfoCards(infoCard: unity)
         return unity
     }
     
@@ -66,6 +66,7 @@ class InfoCardsViewModel {
             guard let self = self, let detailCards = detailCard else {return}
             if error == nil {
                 self.listDetailCards = detailCards
+                DataManager.shared.saveDataImages(images: self.listDetailCards)
                 completion(nil)
                 return
             }
@@ -74,14 +75,56 @@ class InfoCardsViewModel {
         }
     }
     
+    //MARK: - Dado vindo da Api
     func getImages() -> [String] {
-        var listImags = [String]()
-        
+        var listImages = [String]()
         for imgs in listDetailCards{
             if let img = imgs.img {
-                listImags.append(img)
+                listImages.append(img)
             }
         }
-        return listImags
+        return listImages
     }
+    
+    //TODO: - Efetuar testes para confirmar se esta gravando e fazendo Fetch
+    func loadDataInfoCards() {
+        DataManager.shared.loadDataInfoCards { (dataInfoCards, dataListInfoCards) in
+            if let dataList = dataListInfoCards, dataListInfoCards == nil {
+                DataManager.shared.dataListInfoCards = dataList
+            }
+            
+            if let dataInfo = dataInfoCards, dataInfoCards == nil {
+                DataManager.shared.dataInfoCards = dataInfo
+            }
+            
+        }
+    }
+    
+    func loadDataImages() {
+        DataManager.shared.loadDataImages { (imageCards) in
+            if let images = imageCards, imageCards == nil {
+                DataManager.shared.listDataImages = images
+            }
+        }
+    }
+    //MARK: - Dado do CoreData, transformado em [String]
+    func getDataImages() -> [String] {
+        loadDataImages()
+      let dataImages = DataManager.shared.listDataImages
+        var listImagesStrings = [String]()
+        for items in dataImages {
+            if let item = items.img {
+                listImagesStrings.append(item)
+            }
+        }
+        return listImagesStrings
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

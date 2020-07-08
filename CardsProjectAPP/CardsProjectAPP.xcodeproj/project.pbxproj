@@ -18,6 +18,8 @@
 		7A20CFC124B35F0A00B8693E /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFC024B35F0A00B8693E /* UIImageView+Extension.swift */; };
 		7A20CFC324B3BAC600B8693E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFC224B3BAC600B8693E /* BaseViewController.swift */; };
 		7A20CFC624B3E80400B8693E /* RandomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFC524B3E80300B8693E /* RandomColors.swift */; };
+		7A20CFC924B40D7200B8693E /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFC724B40D7100B8693E /* CoreData.xcdatamodeld */; };
+		7A20CFFC24B413B300B8693E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFFB24B413B300B8693E /* DataManager.swift */; };
 		7A2324EE24AE5C6A003B84BE /* ListCardsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2324ED24AE5C6A003B84BE /* ListCardsTableViewCell.swift */; };
 		7A2324F024AE6461003B84BE /* ListCardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2324EF24AE6461003B84BE /* ListCardsCollectionViewCell.swift */; };
 		7ADE82B624AE03A300366813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82B524AE03A300366813 /* AppDelegate.swift */; };
@@ -54,6 +56,8 @@
 		7A20CFC024B35F0A00B8693E /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		7A20CFC224B3BAC600B8693E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		7A20CFC524B3E80300B8693E /* RandomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomColors.swift; sourceTree = "<group>"; };
+		7A20CFC824B40D7100B8693E /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		7A20CFFB24B413B300B8693E /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		7A2324ED24AE5C6A003B84BE /* ListCardsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsTableViewCell.swift; sourceTree = "<group>"; };
 		7A2324EF24AE6461003B84BE /* ListCardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsCollectionViewCell.swift; sourceTree = "<group>"; };
 		7ADE82B224AE03A300366813 /* CardsProjectAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardsProjectAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +140,7 @@
 		7A20CFB824B2389400B8693E /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				7A20CFFB24B413B300B8693E /* DataManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				7A20CFAC24AF76B700B8693E /* ViewModel */,
 				7ADE82DC24AE1AB300366813 /* View */,
 				7ADE82B524AE03A300366813 /* AppDelegate.swift */,
+				7A20CFC724B40D7100B8693E /* CoreData.xcdatamodeld */,
 				7ADE82B724AE03A300366813 /* SceneDelegate.swift */,
 				7ADE82BE24AE03A800366813 /* Assets.xcassets */,
 				7ADE82C024AE03A800366813 /* LaunchScreen.storyboard */,
@@ -421,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ADE82BA24AE03A300366813 /* HomeViewController.swift in Sources */,
+				7A20CFFC24B413B300B8693E /* DataManager.swift in Sources */,
 				7ADE82B624AE03A300366813 /* AppDelegate.swift in Sources */,
 				7A20CFA824AE904000B8693E /* InsideViewController.swift in Sources */,
 				7ADE82B824AE03A300366813 /* SceneDelegate.swift in Sources */,
@@ -433,6 +440,7 @@
 				7ADE82D924AE0CC900366813 /* UIColor+Extension.swift in Sources */,
 				7A20CFB324AF83E500B8693E /* InfoCardsViewModel.swift in Sources */,
 				7A20CFAB24AF663500B8693E /* DetailCardsCollectionViewCell.swift in Sources */,
+				7A20CFC924B40D7200B8693E /* CoreData.xcdatamodeld in Sources */,
 				7A20CFC124B35F0A00B8693E /* UIImageView+Extension.swift in Sources */,
 				7A20CFB124AF7A4500B8693E /* InfoCardModel.swift in Sources */,
 				7A2324EE24AE5C6A003B84BE /* ListCardsTableViewCell.swift in Sources */,
@@ -700,6 +708,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7A20CFC724B40D7100B8693E /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7A20CFC824B40D7100B8693E /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 7A20CFC824B40D7100B8693E /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7ADE82AA24AE03A300366813 /* Project object */;
 }
