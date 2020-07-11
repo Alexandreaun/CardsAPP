@@ -106,7 +106,6 @@ class InsideViewController: BaseViewController {
                 }
                 self.bindUI()
                 self.refreshControl.endRefreshing()
-                
             }
         }
     }

@@ -12,7 +12,7 @@ class HomeViewController: BaseViewController {
     
     var viewModel = InfoCardsViewModel(infoApiManager: InfoApiManager())
     private let refreshControl = UIRefreshControl()
-    
+
     //MARK: - UI
     lazy var labelTitle: UILabel = {
         let v = UILabel(frame: CGRect(x: 0, y: 0, width: 225, height: 55))
