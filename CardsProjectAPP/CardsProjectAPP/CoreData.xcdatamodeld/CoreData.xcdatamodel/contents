@@ -3,18 +3,11 @@
     <entity name="DataDetailCards" representedClassName="DataDetailCards" syncable="YES" codeGenerationType="class">
         <attribute name="img" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="DataInfoCards" representedClassName="DataInfoCards" syncable="YES" codeGenerationType="class">
-        <attribute name="cardsModel" optional="YES" attributeType="String"/>
-        <attribute name="typeName" optional="YES" attributeType="String"/>
-        <relationship name="cardsImage" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DataDetailCards"/>
-        <relationship name="names" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DataListInfoCards"/>
-    </entity>
-    <entity name="DataListInfoCards" representedClassName="DataListInfoCards" syncable="YES" codeGenerationType="class">
-        <attribute name="nameList" optional="YES" attributeType="String"/>
-    </entity>
+    <entity name="DataInfoCards" representedClassName="" syncable="YES"/>
+    <entity name="DataListInfoCards" representedClassName="" syncable="YES"/>
     <elements>
         <element name="DataDetailCards" positionX="-76.48046875" positionY="7.2734375" width="128" height="58"/>
-        <element name="DataInfoCards" positionX="-331.046875" positionY="-197.640625" width="183.51953125" height="103"/>
-        <element name="DataListInfoCards" positionX="-299.90234375" positionY="-1.1875" width="128" height="58"/>
+        <element name="DataInfoCards" positionX="-331.046875" positionY="-197.640625" width="183.51953125" height="43"/>
+        <element name="DataListInfoCards" positionX="-299.90234375" positionY="-1.1875" width="128" height="43"/>
     </elements>
 </model>

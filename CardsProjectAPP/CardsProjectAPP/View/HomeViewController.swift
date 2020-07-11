@@ -11,9 +11,9 @@ import UIKit
 class HomeViewController: BaseViewController {
     
     var viewModel = InfoCardsViewModel(infoApiManager: InfoApiManager())
-    var infoCards = [UnifyInfoCardModel]()
-    var isApiError: Bool = false
+    private let refreshControl = UIRefreshControl()
     
+    //MARK: - UI
     lazy var labelTitle: UILabel = {
         let v = UILabel(frame: CGRect(x: 0, y: 0, width: 225, height: 55))
         v.textColor = .colorMainTitle
@@ -42,12 +42,13 @@ class HomeViewController: BaseViewController {
         return v
     }()
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayoutUI()
         instantiateUI()
+        pullToRefresh()
         getResponseInfoListCards()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,34 +56,45 @@ class HomeViewController: BaseViewController {
         showLoadingAnimation()
         getResponseInfoListCards()
     }
-    
+    //MARK: - Methods
     private func instantiateUI() {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(ListCardsTableViewCell.self, forCellReuseIdentifier: ListCardsTableViewCell.tableviewIdentifier)
+        tableview.refreshControl = refreshControl
     }
     
     private func getResponseInfoListCards() {
         viewModel.getInfoCards { [weak self] (error) in
             guard let self = self else {return}
+            
             DispatchQueue.main.async {
                 if error == nil {
                     self.tableview.reloadData()
                     self.hiddenLoadingAnimation()
                 }else{
-                    DispatchQueue.main.async {
-                        self.handlerErrorRequestInfo()
-                        self.hiddenLoadingAnimation()
-                    }
+                    self.handlerErrorRequestInfo()
+                    self.hiddenLoadingAnimation()
                 }
+                self.refreshControl.endRefreshing()
             }
         }
     }
     
-    private func handlerErrorRequestInfo() {
-        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar as informações dos Cards. Tente novamente mais tarde!")
+    private func pullToRefresh() {
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
+    @objc func refreshData() {
+        getResponseInfoListCards()
+        refreshControl.endRefreshing()
+    }
+    
+    private func handlerErrorRequestInfo() {
+        showError(buttonLabel: "OK", titleError: "ATENÇÃO!", messageError: "Tivemos um problema para atualizar as informações dos Cards. Pode ser a sua internet, verifique-a ou tente novamente mais tarde!")
+    }
+    
+    //MARK: - Auto Layout
     private func setupLayoutUI() {
         view.backgroundColor = .colorBkg
         view.addSubview(labelTitle)
@@ -119,7 +131,7 @@ class HomeViewController: BaseViewController {
         ])
     }
 }
-
+    //MARK: - Extension
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -146,7 +158,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return 128
     }
 }
-
+    //MARK: - Delegate
 extension HomeViewController: CustomCellDelegate  {
     
     func onClickCollectionViewCell(cell: UICollectionViewCell?, type: String, name: String) {

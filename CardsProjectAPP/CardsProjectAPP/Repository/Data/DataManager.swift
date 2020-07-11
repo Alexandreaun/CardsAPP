@@ -25,46 +25,24 @@ class DataManager: NSObject {
     
     var listDataImages = [DataDetailCards]()
     
-    var dataInfoCards = [DataInfoCards]()
-    var dataListInfoCards = [DataListInfoCards]()
-    
-    func saveDataInfoCards(infoCard: [UnifyInfoCardModel]) {
-        let context = persistentContainer.viewContext
-        let infoList = DataInfoCards(context: context)
-        let namesList = DataListInfoCards(context: context)
-        
-        for values in infoCard {
-            infoList.typeName = values.typeName
-            
-            for val in values.cardsModel {
-                namesList.nameList = val
-            }
-        }
-        
-            do {
-                try context.save()
-            } catch {
-                let nserror = ValidationError(titleError: "Erro", messageError: "Não foi possível gravar os dados")
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        
-    }
-    
     func saveDataImages(images: [DetailCardModel]) {
         let context = persistentContainer.viewContext
         
         for values in images {
             let imageCards = DataDetailCards(context: context)
-            imageCards.img = values.img
+            guard let val = values.img else {
+                imageCards.img = ""
+                return
+            }
+            imageCards.img = val
         }
         
-            do {
-                try context.save()
-            } catch {
-                let nserror = ValidationError(titleError: "Erro", messageError: "Não foi possível gravar os dados")
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        
+        do {
+            try context.save()
+        } catch {
+            let nserror = ValidationError(titleError: "Erro", messageError: "Não foi possível gravar os dados")
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
     }
     
     func loadDataImages(completion: ([DataDetailCards]?) -> Void) {
@@ -73,7 +51,7 @@ class DataManager: NSObject {
         
         do {
             let result1 = try context.fetch(request1)
-
+            
             self.listDataImages = result1 as? [DataDetailCards] ?? []
             completion(listDataImages)
         }catch {
@@ -81,37 +59,4 @@ class DataManager: NSObject {
             completion(nil)
         }
     }
-
-    func loadDataInfoCards(completion: ([DataInfoCards]?, [DataListInfoCards]?) -> Void) {
-        let context = persistentContainer.viewContext
-        
-        let request2 = NSFetchRequest<NSFetchRequestResult>(entityName: "DataInfoCards")
-        let request3 = NSFetchRequest<NSFetchRequestResult>(entityName: "DataListInfoCards")
-        
-        do {
-            let result2 = try context.fetch(request2)
-            let result3 = try context.fetch(request3)
-
-            self.dataInfoCards = result2 as? [DataInfoCards] ?? []
-            self.dataListInfoCards = result3 as? [DataListInfoCards] ?? []
-            
-//            for values in dataInfoCards {
-//                let dataInfo = DataInfoCards()
-//                dataInfo.names = values.names
-//            }
-            completion(dataInfoCards, dataListInfoCards)
-            
-        }catch {
-            print(error.localizedDescription)
-            completion(nil, nil)
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
 }

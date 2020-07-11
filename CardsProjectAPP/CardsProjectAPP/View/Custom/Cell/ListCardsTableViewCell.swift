@@ -54,7 +54,7 @@ class ListCardsTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             collectionview.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             collectionview.leftAnchor.constraint(equalTo: leftAnchor, constant: 24),
-            collectionview.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
+            collectionview.rightAnchor.constraint(equalTo: rightAnchor, constant: -1),
             collectionview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         ])
     }}
@@ -73,9 +73,21 @@ extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewData
         guard let cell: ListCardsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCardsCollectionViewCell.collectionIdentifier, for: indexPath) as? ListCardsCollectionViewCell else {return UICollectionViewCell()}
         guard let infonames = infoNames else {return UICollectionViewCell()}
         
+        cell.contentView.layer.cornerRadius = 16
+        cell.contentView.clipsToBounds = false
+        cell.contentView.layer.borderColor = UIColor.gray.cgColor
+        cell.contentView.layer.masksToBounds = true
+        cell.backgroundColor = .clear
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+        cell.layer.shadowRadius = 5
+        cell.layer.shadowOpacity = 1
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
+
         if indexPath.item < infonames.count {
             cell.contentList = infonames[indexPath.item]
-            cell.viewList.backgroundColor = .randomColorCell
+            cell.viewList.backgroundColor = RandomColors.randomColors(numberOfItems: infonames.count)[indexPath.row]
         }
         return cell
     }
@@ -86,7 +98,7 @@ extension ListCardsTableViewCell: UICollectionViewDelegate, UICollectionViewData
             if indexPath.item < infonames.count {
                 let name = infonames[indexPath.item]
                 let type = typeSelected?.typeName ?? ""
-                delegate?.onClickCollectionViewCell(cell: cell, type: type.lowercased(), name: name)
+                delegate?.onClickCollectionViewCell(cell: cell, type: type, name: name)
             }
         }
     }

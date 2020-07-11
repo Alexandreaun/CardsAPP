@@ -14,16 +14,8 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
     
     lazy var viewList: UIView = {
         let v = UIView(frame: .zero)
-        v.layer.shadowColor = UIColor(red: 0.125, green: 0.125, blue: 0.196, alpha: 0.1).cgColor
-        v.layer.shadowOpacity = 1
-        v.layer.shadowOffset = CGSize(width: 0, height: 2)
-        v.layer.shadowRadius = 5
-        v.layer.position = v.center
-        v.layer.shadowPath = UIBezierPath(roundedRect: v.bounds, cornerRadius: 16).cgPath
-        v.layer.shouldRasterize = true
         v.clipsToBounds = true
         v.layer.cornerRadius = 16
-        v.layer.masksToBounds = false
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -33,6 +25,7 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
         v.textAlignment = .left
         v.textColor = .white
         v.numberOfLines = 1
+        v.adjustsFontSizeToFitWidth = true
         v.font = UIFont().fontTitleSmall(size: 18)
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
@@ -71,5 +64,4 @@ class ListCardsCollectionViewCell: UICollectionViewCell {
             labelTitle.text = contentList
         }
     }
-      
 }
