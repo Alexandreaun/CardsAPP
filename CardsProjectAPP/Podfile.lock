@@ -1,0 +1,22 @@
+PODS:
+  - FSnapChatLoading (1.0.5)
+  - SDWebImage (5.8.3):
+    - SDWebImage/Core (= 5.8.3)
+  - SDWebImage/Core (5.8.3)
+
+DEPENDENCIES:
+  - FSnapChatLoading
+  - SDWebImage
+
+SPEC REPOS:
+  trunk:
+    - FSnapChatLoading
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  FSnapChatLoading: c06f4e0a4a4ec1eba8f2fef46f8c1653cc79b2ef
+  SDWebImage: 112503ec94a5a2a41869503844a15e8d8f1ead5c
+
+PODFILE CHECKSUM: 1e4842543d62343d25d8f2a070201c17c7352cc5
+
+COCOAPODS: 1.8.4
