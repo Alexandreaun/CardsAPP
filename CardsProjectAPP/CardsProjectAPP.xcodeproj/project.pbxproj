@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5CCB2C69E6A16A420F73C1A2 /* Pods_CardsProjectAPP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8158A890AB663ABC13A1AEA3 /* Pods_CardsProjectAPP.framework */; };
+		7A1B5C9A24B95A6E00746A16 /* InfoCardsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1B5C9924B95A6E00746A16 /* InfoCardsViewModelTests.swift */; };
+		7A1B5C9C24B96C4500746A16 /* InfoCardModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1B5C9B24B96C4500746A16 /* InfoCardModelTest.swift */; };
+		7A1B5C9E24B9798700746A16 /* InfoApiManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1B5C9D24B9798700746A16 /* InfoApiManagerTests.swift */; };
 		7A20CFA824AE904000B8693E /* InsideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFA724AE904000B8693E /* InsideViewController.swift */; };
 		7A20CFAB24AF663500B8693E /* DetailCardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFAA24AF663500B8693E /* DetailCardsCollectionViewCell.swift */; };
 		7A20CFAF24AF798900B8693E /* InfoApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A20CFAE24AF798900B8693E /* InfoApiManager.swift */; };
@@ -27,7 +30,6 @@
 		7ADE82BA24AE03A300366813 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82B924AE03A300366813 /* HomeViewController.swift */; };
 		7ADE82BF24AE03A800366813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ADE82BE24AE03A800366813 /* Assets.xcassets */; };
 		7ADE82C224AE03A800366813 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ADE82C024AE03A800366813 /* LaunchScreen.storyboard */; };
-		7ADE82CD24AE03A800366813 /* CardsProjectAPPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82CC24AE03A800366813 /* CardsProjectAPPTests.swift */; };
 		7ADE82D924AE0CC900366813 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82D824AE0CC900366813 /* UIColor+Extension.swift */; };
 		7ADE82DB24AE0EC700366813 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82DA24AE0EC700366813 /* UIFont+Extension.swift */; };
 		7ADE82DF24AE3BAE00366813 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADE82DE24AE3BAE00366813 /* ValidationError.swift */; };
@@ -46,6 +48,9 @@
 
 /* Begin PBXFileReference section */
 		1EC2F5B46D1A57519EE95287 /* Pods-CardsProjectAPP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardsProjectAPP.release.xcconfig"; path = "Target Support Files/Pods-CardsProjectAPP/Pods-CardsProjectAPP.release.xcconfig"; sourceTree = "<group>"; };
+		7A1B5C9924B95A6E00746A16 /* InfoCardsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardsViewModelTests.swift; sourceTree = "<group>"; };
+		7A1B5C9B24B96C4500746A16 /* InfoCardModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardModelTest.swift; sourceTree = "<group>"; };
+		7A1B5C9D24B9798700746A16 /* InfoApiManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoApiManagerTests.swift; sourceTree = "<group>"; };
 		7A20CFA724AE904000B8693E /* InsideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideViewController.swift; sourceTree = "<group>"; };
 		7A20CFAA24AF663500B8693E /* DetailCardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCardsCollectionViewCell.swift; sourceTree = "<group>"; };
 		7A20CFAE24AF798900B8693E /* InfoApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoApiManager.swift; sourceTree = "<group>"; };
@@ -68,7 +73,6 @@
 		7ADE82C124AE03A800366813 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7ADE82C324AE03A800366813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7ADE82C824AE03A800366813 /* CardsProjectAPPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardsProjectAPPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7ADE82CC24AE03A800366813 /* CardsProjectAPPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsProjectAPPTests.swift; sourceTree = "<group>"; };
 		7ADE82CE24AE03A800366813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7ADE82D824AE0CC900366813 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		7ADE82DA24AE0EC700366813 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
@@ -221,8 +225,10 @@
 		7ADE82CB24AE03A800366813 /* CardsProjectAPPTests */ = {
 			isa = PBXGroup;
 			children = (
-				7ADE82CC24AE03A800366813 /* CardsProjectAPPTests.swift */,
 				7ADE82CE24AE03A800366813 /* Info.plist */,
+				7A1B5C9924B95A6E00746A16 /* InfoCardsViewModelTests.swift */,
+				7A1B5C9B24B96C4500746A16 /* InfoCardModelTest.swift */,
+				7A1B5C9D24B9798700746A16 /* InfoApiManagerTests.swift */,
 			);
 			path = CardsProjectAPPTests;
 			sourceTree = "<group>";
@@ -453,7 +459,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ADE82CD24AE03A800366813 /* CardsProjectAPPTests.swift in Sources */,
+				7A1B5C9A24B95A6E00746A16 /* InfoCardsViewModelTests.swift in Sources */,
+				7A1B5C9C24B96C4500746A16 /* InfoCardModelTest.swift in Sources */,
+				7A1B5C9E24B9798700746A16 /* InfoApiManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
