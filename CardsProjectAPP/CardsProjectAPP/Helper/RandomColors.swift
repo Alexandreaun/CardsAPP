@@ -10,14 +10,21 @@ import UIKit
 
 class RandomColors {
     
-    public static func fillBackgroundCell(numberOfItems: Int) -> [UIColor] {
-        var listColors = [UIColor]()
-        for _ in 1...numberOfItems {
-            let color: UIColor = .randomColorCell
-
-            listColors.append(color)
+    public static func randomColors(numberOfItems: Int) -> [UIColor]{
+        
+        var numberColor: CGFloat = 0
+        var listOfColors = [UIColor]()
+        var listFloat = [CGFloat]()
+        
+        for _ in 0...numberOfItems {
+            numberColor = CGFloat.random(in: 0...0.58)
+            listFloat.append(numberColor)
         }
-        return listColors
+        
+        for cor in listFloat {
+            let randomColorCell = UIColor(red: cor, green: .random(in: 0...0.58) , blue: cor, alpha: 1)
+            listOfColors.append(randomColorCell)
+        }
+        return listOfColors
     }
 }
-

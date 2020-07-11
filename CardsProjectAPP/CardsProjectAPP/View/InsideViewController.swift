@@ -14,7 +14,10 @@ class InsideViewController: BaseViewController {
     var type: String?
     var cards = [String]()
     let viewModel = InfoCardsViewModel(infoApiManager: InfoApiManager())
+    private let refreshControl = UIRefreshControl()
+    var isErrorApi: Bool = false
     
+    //MARK: - UI
     lazy var viewBkButton: UIView = {
         let v = UIView(frame: .zero)
         v.backgroundColor = .colorBackButton
@@ -34,7 +37,7 @@ class InsideViewController: BaseViewController {
         let v = UILabel(frame: CGRect(x: 0, y: 0, width: 8, height: 16))
         v.textColor = .white
         v.numberOfLines = 1
-        v.font = UIFont().fontTitleSmall(size: 18)
+        v.font = UIFont().fontTitleSmall(size: 25).bold()
         v.text = "<"
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
@@ -56,6 +59,7 @@ class InsideViewController: BaseViewController {
         let v = UICollectionView(frame: .zero, collectionViewLayout: layout)
         v.register(DetailCardsCollectionViewCell.self, forCellWithReuseIdentifier: DetailCardsCollectionViewCell.collectionDetailIdentifier)
         v.backgroundColor = .colorBkg
+        v.alwaysBounceVertical = true
         v.showsVerticalScrollIndicator = false
         v.delegate = self
         v.dataSource = self
@@ -63,56 +67,73 @@ class InsideViewController: BaseViewController {
         return v
     }()
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayoutUI()
         configureUI()
         sendDatas()
-        getResponseDetailsCards()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //showLoadingAnimation()
         getResponseDetailsCards()
     }
     
+    //MARK: - Methods
     private func sendDatas() {
         viewModel.name = name
         viewModel.type = type
-        getResponseDetailsCards()
+        pullToRefresh()
     }
     
     private func getResponseDetailsCards() {
+        showLoadingAnimation()
         viewModel.getDetailCards() { [weak self] (error) in
             guard let self = self else {return}
-            self.cards = self.viewModel.getImages()
+            
             DispatchQueue.main.async {
+                self.hiddenLoadingAnimation()
+                
                 if error == nil {
-                    if self.cards.count > 0 {
-                        self.collection.reloadData()
-                        self.hiddenLoadingAnimation()
-                    }else{
-                        self.handlerErrorRequestInfo()
-                        self.hiddenLoadingAnimation()
-                    }
+                    self.isErrorApi = false
+                    self.hiddenLoadingAnimation()
                     
                 }else {
-                    self.handlerErrorRequestInfo()
+                    self.isErrorApi = true
                     self.hiddenLoadingAnimation()
+                    self.handlerError()
                 }
+                self.bindUI()
+                self.refreshControl.endRefreshing()
             }
         }
     }
     
-    private func handlerErrorRequestInfo() {
-        showError(buttonLabel: "Ok", titleError: "Desculpe!", messageError: "Tivemos um problema para atualizar as imagens. Tente novamente mais tarde!")
+    private func bindUI() {
+        self.cards = isErrorApi ? viewModel.getDataImages() : viewModel.getImages()
+        self.collection.reloadData()
+    }
+    
+    private func pullToRefresh() {
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    
+    @objc func refreshData() {
+        getResponseDetailsCards()
+        refreshControl.endRefreshing()
+    }
+    
+    private func handlerError() {
+        self.showError(buttonLabel: "OK", titleError: "ATENÇÃO!", messageError: "Tivemos um problema para atualizar as imagens. Pode ser a sua internet, verifique-a ou tente novamente mais tarde!")
     }
     
     private func configureUI() {
         labelTitle.text = type ?? ""
+        collection.refreshControl = refreshControl
     }
     
+    //MARK: - Auto Layout
     private func setupLayoutUI() {
         view.backgroundColor = .colorBkg
         view.addSubview(viewBkButton)
@@ -162,6 +183,7 @@ class InsideViewController: BaseViewController {
     }
 }
 
+    //MARK: - Extension
 extension InsideViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -177,9 +199,12 @@ extension InsideViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCardsCollectionViewCell.collectionDetailIdentifier, for: indexPath) as? DetailCardsCollectionViewCell else {return UICollectionViewCell()}
         
         if indexPath.item < cards.count {
-            cell.imageCard.loadWebImage(imageView: cell.imageCard, string: cards[indexPath.item])
+            cell.imageCard.sd_setImage(with: URL(string: cards[indexPath.item])) { (image, error, imageCacheType, url) in
+                if error != nil {
+                    cell.imageCard.image = UIImage(named: "imagemindisponivel")
+                }
+            }
         }
         return cell
     }
 }
-

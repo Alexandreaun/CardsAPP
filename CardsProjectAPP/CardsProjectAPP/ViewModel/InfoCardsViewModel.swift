@@ -13,7 +13,6 @@ class InfoCardsViewModel {
     let infoApiManager: InfoRequestDelegate
     var listCards = [UnifyInfoCardModel]()
     var listDetailCards = [DetailCardModel]()
-    
     var name: String?
     var type: String?
     
@@ -21,11 +20,15 @@ class InfoCardsViewModel {
         self.infoApiManager = infoApiManager
     }
     
+    //MARK: - Request endPoint Info
     func getInfoCards(completion: @escaping (ValidationError?) -> Void) {
         infoApiManager.getApiInfoCards { [weak self] (cards, error) in
-            guard let self = self else {return}
+            guard let self = self, let card = cards else {
+                completion(error)
+                return
+            }
             if error == nil {
-                self.listCards = self.loadNewListInfoCards(info: cards)
+                self.listCards = self.loadNewListInfoCards(info: card)
                 completion(nil)
                 return
             }
@@ -33,21 +36,21 @@ class InfoCardsViewModel {
             return
         }
     }
-    
-    //TODO: - Tratar excessão em caso de dados nulos
-    func loadNewListInfoCards(info: InfoCardModel?) -> [UnifyInfoCardModel] {
-        let unity = [UnifyInfoCardModel(typeName: "Classes", cardsModel: info?.classes ?? []),
-                     UnifyInfoCardModel(typeName: "Sets", cardsModel: info?.sets ?? []),
-                     UnifyInfoCardModel(typeName: "Standard", cardsModel: info?.standard ?? []),
-                     UnifyInfoCardModel(typeName: "Wild", cardsModel: info?.wild ?? []),
-                     UnifyInfoCardModel(typeName: "Types", cardsModel: info?.types ?? []),
-                     UnifyInfoCardModel(typeName: "Factions", cardsModel: info?.factions ?? []),
-                     UnifyInfoCardModel(typeName: "Qualities", cardsModel: info?.qualities ?? []),
-                     UnifyInfoCardModel(typeName: "Races", cardsModel: info?.races ?? [])
+    //MARK: - Load info cards
+    func loadNewListInfoCards(info: InfoCardModel) -> [UnifyInfoCardModel] {
+        let unity = [UnifyInfoCardModel(typeName: "Classes", cardsModel: info.classes ?? []),
+                     UnifyInfoCardModel(typeName: "Sets", cardsModel: info.sets ?? []),
+                     UnifyInfoCardModel(typeName: "Standard", cardsModel: info.standard ?? []),
+                     UnifyInfoCardModel(typeName: "Wild", cardsModel: info.wild ?? []),
+                     UnifyInfoCardModel(typeName: "Types", cardsModel: info.types ?? []),
+                     UnifyInfoCardModel(typeName: "Factions", cardsModel: info.factions ?? []),
+                     UnifyInfoCardModel(typeName: "Qualities", cardsModel: info.qualities ?? []),
+                     UnifyInfoCardModel(typeName: "Races", cardsModel: info.races ?? [])
         ]
         return unity
     }
     
+    //MARK: - Load titleForSections
     var titleForSections: [String] {
         get {
             var titleList = [String]()
@@ -58,30 +61,54 @@ class InfoCardsViewModel {
         }
     }
     
+    //MARK: - Request endPoint to Images
     func getDetailCards(completion: @escaping (ValidationError?) -> Void) {
         
-        guard let typeDetail = type, let nameDetail = name else {return}
+        guard let typeDetail = type?.lowercased(), let nameDetail = name else {return}
         
-        infoApiManager.getApiCardsDetail(typeDetail, nameDetail) { [weak self] (detailCard, error) in
-            guard let self = self, let detailCards = detailCard else {return}
+        infoApiManager.getApiCardsDetail(typeDetail, nameDetail) { [weak self] (images, error) in
+            guard let self = self, let detailCards = images else {
+                completion(error)
+                return}
             if error == nil {
                 self.listDetailCards = detailCards
                 completion(nil)
                 return
             }
+            DataManager.shared.saveDataImages(images: self.listDetailCards)
             completion(error)
             return
         }
     }
     
     func getImages() -> [String] {
-        var listImags = [String]()
-        
+        var listImages = [String]()
         for imgs in listDetailCards{
             if let img = imgs.img {
-                listImags.append(img)
+                listImages.append(img)
             }
         }
-        return listImags
+        return listImages
+    }
+    
+    //MARK: - Fetch CoreData
+    func loadDataImages() {
+        DataManager.shared.loadDataImages { (imageCards) in
+            if let images = imageCards {
+                DataManager.shared.listDataImages = images
+            }
+        }
+    }
+    
+    func getDataImages() -> [String] {
+        loadDataImages()
+        let dataImages = DataManager.shared.listDataImages
+        var listImagesStrings = [String]()
+        for items in dataImages {
+            if let item = items.img {
+                listImagesStrings.append(item)
+            }
+        }
+        return listImagesStrings
     }
 }

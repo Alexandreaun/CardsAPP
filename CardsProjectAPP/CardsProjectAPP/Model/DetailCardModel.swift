@@ -9,11 +9,6 @@
 import Foundation
 
 struct DetailCardModel: Codable {
-   // let cardID, dbfID, name, cardSet: String?
-   // let text: String?
-    //let collectible: Bool?
     let img: String?
     let imgGold: String?
-    //let howToGetGold: String?
-    //let elite: Bool?
 }

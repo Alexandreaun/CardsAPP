@@ -16,7 +16,6 @@ protocol InfoRequestDelegate: class {
 class InfoApiManager: InfoRequestDelegate {
   
     func getApiInfoCards(completion: @escaping (InfoCardModel?, ValidationError?) -> Void) {
-        
         let urlString = "https://omgvamp-hearthstone-v1.p.rapidapi.com/info?rapidapi-key=96a95fd7b6mshc4cf46eb9c7e4d7p1e2e40jsnb5be8b04e393"
         let error = ValidationError(titleError: "", messageError: "Não foi possível carregar os dados")
         
@@ -39,7 +38,6 @@ class InfoApiManager: InfoRequestDelegate {
                     completion(nil, error)
                     return
                 }
-                
                 do {
                     let decode = JSONDecoder()
                     decode.keyDecodingStrategy = .convertFromSnakeCase
@@ -80,7 +78,6 @@ class InfoApiManager: InfoRequestDelegate {
                     completion(nil, error)
                     return
                 }
-                
                 do {
                     let decode = JSONDecoder()
                     decode.keyDecodingStrategy = .convertFromSnakeCase

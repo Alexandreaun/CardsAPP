@@ -32,5 +32,4 @@ extension UIFont {
     func fontTitleSmall(size: CGFloat) -> UIFont {
         return setFont(name: "Avenir-Roman", size: size)
     }
-    
 }
