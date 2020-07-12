@@ -166,7 +166,7 @@ class InsideViewController: BaseViewController {
         ])
         NSLayoutConstraint.activate([
             labelTitle.topAnchor.constraint(equalTo: topanchor, constant: 109),
-            labelTitle.leftAnchor.constraint(equalTo: viewBkButton.leftAnchor, constant: 201),
+            labelTitle.leftAnchor.constraint(equalTo: viewBkButton.rightAnchor, constant: 30),
             labelTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -31),
             labelTitle.heightAnchor.constraint(equalToConstant: 30)
         ])
