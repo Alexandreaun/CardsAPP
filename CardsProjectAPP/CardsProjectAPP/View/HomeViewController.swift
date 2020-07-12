@@ -20,7 +20,6 @@ class HomeViewController: BaseViewController {
         v.numberOfLines = 1
         v.font = UIFont().fontMainTitleBig()
         v.adjustsFontSizeToFitWidth = true
-        v.minimumScaleFactor = 15
         v.text = "Hearthstone"
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
